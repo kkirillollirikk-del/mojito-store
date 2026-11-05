@@ -1,1 +1,397 @@
-mojito-store
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mojito Home — магазин безалкогольных коктейлей</title>
+  <style>
+    /* Базовые стили */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: #2c3e50;
+      background-color: #f4faf6; /* Очень светлый мятный фон */
+      line-height: 1.6;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    /* Шапка и навигация */
+    header {
+      background-color: #ffffff;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .header-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 0;
+      border-bottom: 1px solid #e0f2e9;
+    }
+    .logo {
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: #0b6e4f; /* Темно-изумрудный */
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .logo span {
+      color: #8cc63f; /* Лаймовый */
+    }
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 20px;
+    }
+    nav a {
+      text-decoration: none;
+      color: #34495e;
+      font-weight: 600;
+      transition: color 0.3s;
+    }
+    nav a:hover {
+      color: #0b6e4f;
+    }
+
+    /* Главный баннер */
+    .hero {
+      background: linear-gradient(135deg, #0b6e4f 0%, #1abc9c 100%);
+      color: white;
+      text-align: center;
+      padding: 60px 20px;
+      margin-bottom: 40px;
+    }
+    .hero h1 {
+      font-size: 2.5rem;
+      margin-bottom: 15px;
+    }
+    .hero p {
+      font-size: 1.2rem;
+      opacity: 0.9;
+    }
+
+    /* Каталог */
+    .catalog-section {
+      margin-bottom: 50px;
+    }
+    .catalog-section h2 {
+      font-size: 1.8rem;
+      color: #0b6e4f;
+      border-bottom: 3px solid #8cc63f;
+      padding-bottom: 10px;
+      margin-bottom: 25px;
+    }
+
+    /* Сетка карточек товаров */
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 25px;
+    }
+
+    /* Карточка товара */
+    .product-card {
+      background: white;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 15px rgba(11, 110, 79, 0.08);
+      transition: transform 0.3s, box-shadow 0.3s;
+      display: flex;
+      flex-direction: column;
+    }
+    .product-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 25px rgba(11, 110, 79, 0.15);
+    }
+    .product-card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-bottom: 1px solid #f0f0f0;
+    }
+    .product-info {
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+    }
+    .product-info h3 {
+      font-size: 1.2rem;
+      margin-bottom: 10px;
+      color: #2c3e50;
+    }
+    .product-specs {
+      list-style: none;
+      margin-bottom: 15px;
+      font-size: 0.9rem;
+      color: #666;
+      flex-grow: 1;
+    }
+    .product-specs li {
+      margin-bottom: 5px;
+      display: flex;
+      justify-content: space-between;
+      border-bottom: 1px dashed #eee;
+      padding-bottom: 3px;
+    }
+    .product-specs span {
+      font-weight: bold;
+      color: #0b6e4f;
+    }
+    .price-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 15px;
+    }
+    .price {
+      font-size: 1.4rem;
+      font-weight: bold;
+      color: #e74c3c;
+    }
+    .buy-btn {
+      background-color: #8cc63f;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .buy-btn:hover {
+      background-color: #7ab332;
+    }
+
+    /* Подвал */
+    footer {
+      background-color: #2c3e50;
+      color: #bdc3c7;
+      text-align: center;
+      padding: 30px 0;
+      margin-top: 50px;
+    }
+    footer a {
+      color: #8cc63f;
+      text-decoration: none;
+    }
+
+    /* Адаптивность */
+    @media (max-width: 768px) {
+      .header-top {
+        flex-direction: column;
+        gap: 15px;
+      }
+      nav ul {
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+      .hero h1 {
+        font-size: 2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Шапка -->
+  <header>
+    <div class="container header-top">
+      <a href="#" class="logo">🍃 Mojito<span>Home</span></a>
+      <nav>
+        <ul>
+          <li><a href="#ready">Готовые</a></li>
+          <li><a href="#kits">Наборы</a></li>
+          <li><a href="#fresh">Ингредиенты</a></li>
+          <li><a href="#accessories">Аксессуары</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Баннер -->
+  <section class="hero">
+    <div class="container">
+      <h1>Идеальный безалкогольный мохито у вас дома</h1>
+      <p>Свежие ингредиенты, готовые напитки и стильные аксессуары с доставкой</p>
+    </div>
+  </section>
+
+  <!-- Основной контент (Каталог) -->
+  <main class="container">
+
+    <!-- Категория 1 -->
+    <section id="ready" class="catalog-section">
+      <h2>Готовые безалкогольные мохито</h2>
+      <div class="product-grid">
+        
+        <!-- Товар 1 -->
+        <article class="product-card">
+          <img src="классмох.webp" alt="Бутылка классического безалкогольного мохито" width="400" height="300">
+          <div class="product-info">
+            <h3>Мохито Классический</h3>
+            <ul class="product-specs">
+              <li>Объем: <span>0.5 л</span></li>
+              <li>Вкус: <span>Лайм и мята</span></li>
+              <li>Сахар: <span>Есть</span></li>
+            </ul>
+            <div class="price-row">
+              <span class="price">180 ₽</span>
+              <button class="buy-btn">В корзину</button>
+            </div>
+          </div>
+        </article>
+
+        <!-- Товар 2 -->
+        <article class="product-card">
+          <img src="клубмох.webp" alt="Бутылка клубничного мохито" width="400" height="300">
+          <div class="product-info">
+            <h3>Мохито Клубничный</h3>
+            <ul class="product-specs">
+              <li>Объем: <span>0.5 л</span></li>
+              <li>Вкус: <span>Клубника</span></li>
+              <li>Калорийность: <span>45 ккал</span></li>
+            </ul>
+            <div class="price-row">
+              <span class="price">190 ₽</span>
+              <button class="buy-btn">В корзину</button>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- Категория 2 -->
+    <section id="kits" class="catalog-section">
+      <h2>Наборы для приготовления</h2>
+      <div class="product-grid">
+
+        <!-- Товар 1 -->
+        <article class="product-card">
+          <img src="подарок.webp" alt="Подарочная коробка с ингредиентами" width="400" height="300">
+          <div class="product-info">
+            <h3>Подарочный набор "Бармен"</h3>
+            <ul class="product-specs">
+              <li>Комплектация: <span>Сироп, мадлер, стакан</span></li>
+              <li>Упаковка: <span>Крафтовая коробка</span></li>
+              <li>Вес: <span>1.2 кг</span></li>
+            </ul>
+            <div class="price-row">
+              <span class="price">1 500 ₽</span>
+              <button class="buy-btn">В корзину</button>
+            </div>
+          </div>
+        </article>
+
+        <!-- Товар 2 -->
+        <article class="product-card">
+          <img src="пати.webp" alt="Большой набор для вечеринки" width="400" height="300">
+          <div class="product-info">
+            <h3>Набор для вечеринки</h3>
+            <ul class="product-specs">
+              <li>Комплектация: <span>Сироп 1л, 6 бутылок тоника</span></li>
+              <li>На порций: <span>10-12</span></li>
+              <li>Тип: <span>Для компании</span></li>
+            </ul>
+            <div class="price-row">
+              <span class="price">1 200 ₽</span>
+              <button class="buy-btn">В корзину</button>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- Категория 3 -->
+    <section id="fresh" class="catalog-section">
+      <h2>Свежие ингредиенты</h2>
+      <div class="product-grid">
+
+        <!-- Товар 1 -->
+        <article class="product-card">
+          <img src="лаймята.webp" alt="Свежая мята и лаймы" width="400" height="300">
+          <div class="product-info">
+            <h3>Набор "Свежесть"</h3>
+            <ul class="product-specs">
+              <li>Состав: <span>Мята 50г, Лайм 3 шт</span></li>
+              <li>Срок хранения: <span>5 дней</span></li>
+              <li>Доставка: <span>Экспресс</span></li>
+            </ul>
+            <div class="price-row">
+              <span class="price">350 ₽</span>
+              <button class="buy-btn">В корзину</button>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- Категория 4 -->
+    <section id="accessories" class="catalog-section">
+      <h2>Посуда и аксессуары</h2>
+      <div class="product-grid">
+
+        <!-- Товар 1 -->
+        <article class="product-card">
+          <img src="хайбол.webp" alt="Стеклянный стакан хайбол" width="400" height="300">
+          <div class="product-info">
+            <h3>Стакан Хайбол</h3>
+            <ul class="product-specs">
+              <li>Объем: <span>350 мл</span></li>
+              <li>Материал: <span>Стекло</span></li>
+              <li>Мытье: <span>В посудомоечной машине</span></li>
+            </ul>
+            <div class="price-row">
+              <span class="price">400 ₽</span>
+              <button class="buy-btn">В корзину</button>
+            </div>
+          </div>
+        </article>
+
+        <!-- Товар 2 -->
+        <article class="product-card">
+          <img src="мадлер.webp" alt="Деревянный мадлер для растирания мяты" width="400" height="300">
+          <div class="product-info">
+            <h3>Мадлер для мяты</h3>
+            <ul class="product-specs">
+              <li>Материал: <span>Дерево бук</span></li>
+              <li>Длина: <span>20 см</span></li>
+              <li>Вес: <span>150 г</span></li>
+            </ul>
+            <div class="price-row">
+              <span class="price">650 ₽</span>
+              <button class="buy-btn">В корзину</button>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Подвал -->
+  <footer>
+    <div class="container">
+      <p>&copy; 2026 Mojito Home. Интернет-магазин безалкогольных напитков.</p>
+      <p>Сайт создан в учебных целях для портфолио.</p>
+    </div>
+  </footer>
+
+</body>
+</html>
